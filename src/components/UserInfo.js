@@ -7,7 +7,9 @@ const UserInfo = (props) => {
         GitHub Username: <input id="username" type="text" placeholder="github_username" onChange={props.handleChange} />
       </label>
       <div>
-        <button onClick={props.search}>Calculate my GitHub Score</button>
+        <button onClick={props.search} disabled={props.username === null || props.username === ""}>
+          Calculate my GitHub Score
+        </button>
       </div>
     </div>
   )

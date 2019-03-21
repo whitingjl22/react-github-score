@@ -14,7 +14,7 @@ class GitHubScorePage extends React.Component {
     }
   }
 
-  search = (username) => {
+  search = () => {
     Axios.get(`https://api.github.com/users/${this.state.username}`)
 
       .then((response) => {
@@ -43,7 +43,7 @@ class GitHubScorePage extends React.Component {
       <div className="container">
         <div className="user-data-container">
           <h1>GitHub Score</h1>
-          <UserInfo search={this.search} handleChange={this.handleChange} />
+          <UserInfo search={this.search} handleChange={this.handleChange} username={this.state.username} />
           <ScoreInfo
             userNameValid={this.state.userNameValid}
             errorMessage={this.state.errorMessage}
