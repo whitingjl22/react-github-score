@@ -1,13 +1,14 @@
-import React, { Component } from "react"
+import React from "react"
 import UserInfo from "../components/UserInfo"
-import Axios from "axios"
 import ScoreInfo from "../components/ScoreInfo"
+import Axios from "axios"
 
 class GitHubScorePage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       gitHubData: {},
+      gitHubScore: null,
       username: null,
       errorMessage: null,
       userNameValid: false
@@ -16,10 +17,14 @@ class GitHubScorePage extends React.Component {
 
   search = () => {
     Axios.get(`https://api.github.com/users/${this.state.username}`)
-
       .then((response) => {
         console.log(response)
-        this.setState({ gitHubData: response.data, userNameValid: true })
+        let score = response.data.followers + response.data.public_repos
+        this.setState({
+          gitHubData: response.data,
+          userNameValid: true,
+          gitHubScore: score
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -31,11 +36,7 @@ class GitHubScorePage extends React.Component {
   }
 
   handleChange = (event) => {
-    this.setState({ [event.target.id]: event.target.value }, () => {
-      // if (this.state.description.length < 5) {
-      // 	this.setState({ descriptionValid: false })
-      // }
-    })
+    this.setState({ [event.target.id]: event.target.value }, () => {})
   }
 
   render() {
@@ -48,6 +49,7 @@ class GitHubScorePage extends React.Component {
             userNameValid={this.state.userNameValid}
             errorMessage={this.state.errorMessage}
             gitHubData={this.state.gitHubData}
+            gitHubScore={this.state.gitHubScore}
           />
         </div>
       </div>
